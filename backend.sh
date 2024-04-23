@@ -78,7 +78,7 @@ VALIDATE $? "enabling the baclend"
 dnf install mysql -y &>>$LOGFILE
 VALIDATE $? "installing sql client"
 
-mysql -h db.nettam.online -uroot -p${mysql_root_password} < /app/schema/backend.sql &>>$LOGFILE
+mysql -h 172.31.83.130 -uroot -p${mysql_root_password} < /app/schema/backend.sql &>>$LOGFILE
 VALIDATE $? "setting dtabase root passward"
 
 systemctl restart backend &>>LOGFILE
