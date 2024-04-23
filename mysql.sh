@@ -42,7 +42,7 @@ fi
 
 
 #Below code will be useful for idempotent nature
-mysql -h db.nettam.online -uroot -p${mysql_root_password} -e 'show databases;' &>>$LOGFILE
+mysql -h db.ramu.online -uroot -p${mysql_root_password} -e 'show databases;' &>>$LOGFILE
 if [ $? -ne 0 ]
 then
     mysql_secure_installation --set-root-pass ${mysql_root_password} &>>$LOGFILE
@@ -50,5 +50,4 @@ then
 else
     echo -e "MySQL Root password is already setup...$Y SKIPPING $N"
 fi
-
 
