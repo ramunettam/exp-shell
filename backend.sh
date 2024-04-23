@@ -29,13 +29,13 @@ else
     echo "You are super user."
 fi
 
-dnf module disable nodejs -y &>>LOGFILE
+dnf module disable nodejs -y &>>$LOGFILE
 VALIDATE $? "diabling nodejs previous version"
 
-dnf module enable nodejs:20 -y &>>LOGFILE
+dnf module enable nodejs:20 -y &>>$LOGFILE
 VALIDATE $? "enabling Nodejs 20"
 
-dnf install nodejs -y &>>LOGFILE
+dnf install nodejs -y &>>$LOGFILE
 VALIDATE $? "installing Nodejs"
 
 
@@ -66,16 +66,16 @@ VALIDATE $? "Copied backend service"
 npm install &>>LOGFILE
 VALIDATE $? " installing Nodejs dependenceiess"
 
-systemctl daemon-reload &>>LOGFILE
+systemctl daemon-reload &>>$LOGFILE
 VALIDATE $? "daemon user reload"
 
-systemctl start backend &>>LOGFILE
+systemctl start backend &>>$LOGFILE
 VALIDATE $? "starting the backend"
 
-systemctl enable backend &>>LOGFILE
+systemctl enable backend &>>$LOGFILE
 VALIDATE $? "enabling the baclend"
 
-dnf install mysql -y &>>LOGFILE
+dnf install mysql -y &>>$LOGFILE
 VALIDATE $? "installing sql client"
 
 mysql -h db.nettam.online -uroot -p${mysql_root_password} < /app/schema/backend.sql &>>$LOGFILE
