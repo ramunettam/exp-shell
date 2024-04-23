@@ -9,7 +9,7 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 echo "Please enter DB password:"
-read -s mysql_root_password
+read  mysql_root_password
 
 VALIDATE(){
    if [ $1 -ne 0 ]
@@ -42,8 +42,8 @@ VALIDATE $? "Starting MySQL Server"
 # mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOGFILE
 # VALIDATE $? "Setting up root password"
 
-#Below code will be useful for idempotent nature
-mysql -h db.nettam.online -uroot -p${mysql_root_password} -e 'show databases;' &>>$LOGFILE
+#Below code will be useful for idempotent nature mysql_root_password
+mysql -h db.nettam.online -uroot -p ${mysql_root_password} -e 'show databases;' &>>$LOGFILE
 if [ $? -ne 0 ]
 then
     mysql_secure_installation --set-root-pass ${mysql_root_password} &>>$LOGFILE
