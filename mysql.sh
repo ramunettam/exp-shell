@@ -44,7 +44,7 @@ VALIDATE $? "Starting MySQL Server"
 
 #Below code will be useful for idempotent nature mysql_root_password
 
-mysql -h db.nettam.online -uroot -p${mysql_root_password} -e 'show databases;' &>>$LOGFILE
+mysql -h 172.31.83.130 -uroot -p${mysql_root_password} -e 'show databases;' &>>$LOGFILE
 if [ $? -ne 0 ]
 then
     mysql_secure_installation --set-root-pass ${mysql_root_password} &>>$LOGFILE
