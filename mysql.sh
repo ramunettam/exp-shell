@@ -8,19 +8,18 @@ R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
-
 echo "Please enter DB password:"
-read  mysql_root_password
+read -s mysql_root_password
 
 VALIDATE(){
-    if [ $1 -ne 0 ]
-    then
-    echo -e "$2  ...$R FAILURE $N"
-    exit 1
+   if [ $1 -ne 0 ]
+   then
+        echo -e "$2...$R FAILURE $N"
+        exit 1
     else
-    echo -e "$2 ....$G SUCESS $N"
+        echo -e "$2...$G SUCCESS $N"
     fi
-   }
+}
 
 if [ $USERID -ne 0 ]
 then
@@ -29,20 +28,22 @@ then
 else
     echo "You are super user."
 fi
- 
- dnf install mysql-server -y &>>$LOGFILE
- VALIDATE $? "MYSQL INSTALATTION"
-
- systemctl enable mysqld &>>$LOGFILE
- VALIDATE $? "Enableing Mysql"
-
- systemctl start mysqld &>>$LOGFILE
- VALIDATE $? "Starting Mysql"
 
 
+dnf install mysql-server -y &>>$LOGFILE
+VALIDATE $? "Installing MySQL Server"
+
+systemctl enable mysqld &>>$LOGFILE
+VALIDATE $? "Enabling MySQL Server"
+
+systemctl start mysqld &>>$LOGFILE
+VALIDATE $? "Starting MySQL Server"
+
+# mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOGFILE
+# VALIDATE $? "Setting up root password"
 
 #Below code will be useful for idempotent nature
-mysql -h db.ramu.online -uroot -p${mysql_root_password} -e 'show databases;' &>>$LOGFILE
+mysql -h db.daws78s.online -uroot -p${mysql_root_password} -e 'show databases;' &>>$LOGFILE
 if [ $? -ne 0 ]
 then
     mysql_secure_installation --set-root-pass ${mysql_root_password} &>>$LOGFILE
@@ -50,4 +51,3 @@ then
 else
     echo -e "MySQL Root password is already setup...$Y SKIPPING $N"
 fi
-
